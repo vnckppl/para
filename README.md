@@ -11,5 +11,5 @@ This little scipt can distribute terminal jobs over cores and manage the maximum
 
 **EXAMPLE:**
 
-*/para -c /Volumes/Data/joblist.txt -d /Volumes/Data/Project -p 10/*
+*para -c /Volumes/Data/joblist.txt -d /Volumes/Data/Project -p 10*
 
