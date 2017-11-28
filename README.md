@@ -5,9 +5,9 @@ This little scipt can distribute terminal jobs over cores and manage the maximum
 
 **OPTIONS:**
 
-   -c <filename>          Text file with commands (one per line)
-   -d <directory>         Log file directory
-   -p <number of cores>   Number of processors (cores) to be used
+-   -c <filename>          Text file with commands (one per line)
+-   -d <directory>         Log file directory
+-   -p <number of cores>   Number of processors (cores) to be used
 
 **EXAMPLE:**
 
