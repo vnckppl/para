@@ -64,14 +64,14 @@ NJOBS=$(awk 'NF' ${FILE} | wc -l | sed 's/\ //g')
 JOB_NUM=0
 
 # Announce the start of the batch with date
-echo $'\n\n'$(tput sgr0)$(tput bold)"Start batch at `date`"$(tput sgr0)
+echo $'\n\n'$(tput sgr0)$(tput bold)"Start batch on `date`"$(tput sgr0)
 
 
 # Loop over all jobs
 while read command; do
 
     # Test how many jobs there are running in the background of the current shell
-    # If this is greater or equal then the number specified by the user,
+    # If this is greater or equal than the number specified by the user,
     # then sleep for 30 seconds.
     while [ $(jobs | wc -l) -ge ${PROCESSOR} ] ; do
         sleep 30
@@ -94,7 +94,7 @@ while read command; do
     echo "${command}" >> ${LOG}
     # >>> RUN COMMAND >>> PUT IN BACKGROUND >>> REDIRECT STD ERROR+OUTPUT TO LOG
     bash -c "${command}" >> ${LOG} 2>&1 &
-    # Print the proces ID to the log file
+    # Print the process ID to the log file
     echo "PID=$!" >> ${LOG}
 
 done < <(awk 'NF' "${FILE}")
