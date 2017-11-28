@@ -15,4 +15,4 @@ This little scipt can distribute terminal jobs over cores and manage the maximum
 
 **SCREENSHOT:**
 
-![Screenshot](screenshot.png?raw=true "Example")
+![Screenshot](Screenshot.png?raw=true "Example")
