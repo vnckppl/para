@@ -1,10 +1,6 @@
 #!/bin/bash
 
 # Vincent Koppelmans
-# 2017-11-28
-# PARA v2.0
-
-# Argument = -h help -c command_list -p active_processors
 
 usage()
 {
