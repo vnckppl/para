@@ -127,6 +127,12 @@ if [[ "${Trun}" -gt 0 ]]; then
 # When all parameters for the kill switch have been set:
 elif [[ "${Tkil}" -gt 0 ]]; then
 
+    # Test if para_output folder exists, if not exit
+    if [ ! -d "${DIRECTORY}/para_output" ]; then
+        echo "Wrong directory: directory does not contain a para log folder (para_output)."
+        usage; exit 1;
+    fi
+    
     # Get all process ID numbers
     logs=$(find ${DIRECTORY}/para_output -iname "*.txt")
     for log in $(echo "${logs}"); do
