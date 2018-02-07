@@ -8,7 +8,7 @@ cat << EOF
 $(tput setaf 4)$(tput bold)
 - This script runs jobs in parallel on a multi-core machine. 
 - Jobs are read from a text file (one job per line). 
-- The maximum number of jobs to be run simultaneousyl needs to be specified.$(tput sgr0)
+- The maximum number of jobs to be run simultaneously needs to be specified.$(tput sgr0)
 
 OPTIONS:
    $(tput setaf 5)-h$(tput sgr0)                     Show this ($(tput setaf 5)$(tput bold)h$(tput sgr0))elp menu
