@@ -131,11 +131,15 @@ elif [[ "${Tkil}" -gt 0 ]]; then
     logs=$(find ${DIRECTORY}/para_output -iname "*.txt")
     for log in $(echo "${logs}"); do
 
-        # Get PID
+        # Get process name and PID
+        pNM=$(sed -n 1p "${log}")
         pID=$(sed -n 2p "${log}" | cut -d= -f2)
-
+        
         # Test if PID is running, if so, kill
-        if [ -n "$(ps -p ${pID} -o pid=)" ]; then echo "kill ${pID}"; kill ${pID}; fi
+        if [ -n "$(ps -p ${pID} -o pid=)" ]; then
+            echo "kill PID $(tput setaf 1)${pID}$(tput sgr0)"$'\t'"${pNM}"
+            kill ${pID}
+        fi
 
     done
 
