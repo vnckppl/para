@@ -15,17 +15,17 @@ OPTIONS:
    $(tput setaf 5)-c <filename>$(tput sgr0)          Text file with ($(tput setaf 5)$(tput bold)c$(tput sgr0))ommands (one per line)
    $(tput setaf 5)-d <directory>$(tput sgr0)         Log file ($(tput setaf 5)$(tput bold)d$(tput sgr0))irectory
    $(tput setaf 5)-p <number of cores>$(tput sgr0)   Number of ($(tput setaf 5)$(tput bold)p$(tput sgr0))rocessors (cores) to be used
+   $(tput setaf 5)-k$(tput sgr0)                     ($(tput setaf 5)$(tput bold)K$(tput sgr0))ill jobs invoked by para   
 
 EXAMPLE:
-$(tput setaf 3)$(tput bold)para -c /Volumes/Data/joblist.txt -d /Volumes/Data/Project -p 10$(tput sgr0)
+- Running jobs:
+  $(tput bold)para -c /Volumes/Data/joblist.txt -d /Volumes/Data/Project -p 10$(tput sgr0)
 
-
-
-- If you want to kill all jobs that are invoked by para, stop para (ctrl-c) and run the following command:
-
-$(tput setaf 3)$(tput bold)para -k -d <directory>$(tput sgr0)
-
-...where <directory> should point to the same folder as the one used when invoking para initially.
+- Killing jobs:
+  First quit para if it has not already finished (ctrl-c). Then run:
+  $(tput bold)para -k -d <directory>$(tput sgr0)
+  ...where <directory> should point to the same folder as the one used 
+  when invoking para initially.
 
 
 EOF
