@@ -33,7 +33,7 @@ EOF
 
 FILE=
 PROCESSOR=
-while getopts “hc:d:p:k” OPTION
+while getopts "hc:d:p:k" OPTION
 do
      case $OPTION in
          h)
