@@ -149,7 +149,7 @@ if [[ "${Trun}" -gt 0 ]]; then
     done
         
     # Display jobs that failed if more than 1 failed
-    SUMCOL=$(cat "${report}" | awk -F, '{ SUM += $2} END { print SUM }')
+    SUMCOL=$(cat "${report}" | awk -F, '{ SUM += $NF} END { print SUM }')
     if [ "${SUMCOL}" -gt 0 ]; then
         echo "$(tput setaf 1)The following job(s) failed:$(tput sgr0)"
         cat "${report}" | grep -v ",0$" | column -t | sed -e 's/,/ (exit status /g' -e 's/$/)/g'
