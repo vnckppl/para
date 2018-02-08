@@ -152,7 +152,7 @@ if [[ "${Trun}" -gt 0 ]]; then
     SUMCOL=$(cat "${report}" | awk -F, '{ SUM += $NF} END { print SUM }')
     if [ "${SUMCOL}" -gt 0 ]; then
         echo "$(tput setaf 1)The following job(s) failed:$(tput sgr0)"
-        cat "${report}" | grep -v ",0$" | column -t | sed -e 's/,/ (exit status /g' -e 's/$/)/g'
+        cat "${report}" | awk -F, '{ print $1","$NF }' | grep -v ",0$" | column -t | sed -e 's/,/ (exit status /g' -e 's/$/)/g'
         echo
     fi
         
@@ -163,7 +163,7 @@ elif [[ "${Tkil}" -gt 0 ]]; then
 
     # Test if para_output folder exists, if not exit
     if [ ! -d "${DIRECTORY}/para_output" ]; then
-        echo "Wrong directory: directory does not contain a para log folder (para_output)."
+        echo "$(tput setaf 7)$(tput setab 1)Wrong directory: directory does not contain a para log folder (para_output).$(tput sgr0)"
         usage; exit 1;
     fi
     
