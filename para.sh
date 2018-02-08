@@ -24,8 +24,8 @@ EXAMPLE:
 - Killing jobs:
   First quit para if it has not already finished (ctrl-c). Then run:
   $(tput bold)para -k -d <directory>$(tput sgr0)
-  ...where <directory> should point to the same folder as the one used 
-  when invoking para initially.
+  ...where <directory> should point to the same folder as the one 
+  specified when para was invoked initially.
 
 
 EOF
@@ -64,7 +64,7 @@ Tall=$(( ${#FILE} * ${#PROCESSOR} * ${#DIRECTORY} * ${#KILL} ))
 Trun=$(( ${#FILE} * ${#PROCESSOR} * ${#DIRECTORY} ))
 Tkil=$(( ${#DIRECTORY} * ${#KILL} ))
 
-if [[ "${Tall}" -gt 0 ]]; then echo "Too many arguments specified"; usage ; exit 1; fi
+if [[ "${Tall}" -gt 0 ]]; then echo "$(tput setaf 7)$(tput setab 1) Too many arguments specified $(tput sgr0)"; usage ; exit 1; fi
 
 
 
@@ -179,7 +179,7 @@ elif [[ "${Tkil}" -gt 0 ]]; then
 
     done
 
-else echo "Not enough arguments specified"; usage ; exit 1; fi
+else echo "$(tput setaf 7)$(tput setab 1) Not enough arguments specified $(tput sgr0)"; usage ; exit 1; fi
     
 exit
 
