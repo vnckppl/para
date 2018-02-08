@@ -111,9 +111,9 @@ if [[ "${Trun}" -gt 0 ]]; then
         # Run command and then save exit status; redirect all output to the log; run everything in background
         # if command is already prepended by 'bash'; then
         if [ "$(echo "${command}" | awk '{ print $1 }' | grep -w bash)" ]; then
-            (bash -c "${command/bash/bash -e}"; echo "exit=$?") >> ${LOG} 2>&1 &
+            (time(bash -c "${command/bash/bash -e}"; echo "exit=$?")) >> ${LOG} 2>&1 &
         else \
-            (bash -e "${command}"; echo "exit=$?") >> ${LOG} 2>&1 &
+            (time(bash -e "${command}"; echo "exit=$?")) >> ${LOG} 2>&1 &
         fi
         # Print the process ID to the log file
         echo "PID=$!" >> ${LOG}
@@ -128,17 +128,19 @@ if [[ "${Trun}" -gt 0 ]]; then
     echo $(tput bold)"All jobs finished on `date`"$(tput sgr0)$'\n\n'
 
     
-    # Create exit status report and display report
+    # Create exit status and runtime report
     report="${DIRECTORY}/para_output/jobStatus.csv"
+    echo "Job,Runtime,ExitStatus" > "${report}"
     logs=$(find ${DIRECTORY}/para_output -iname "*.txt")
     for log in $(echo "${logs}"); do
 
-        # Get process name and exit status
+        # Get process name, runtime, and exit status
         pNM=$(sed -n 1p "${log}")
-        ext=$(cat "${log}" | tail -1 | cut -d= -f2 | awk '{ print $NF }')
+        rtm=$(cat "${log}" | tail -3 | grep real | awk '{ print $2 }')
+        ext=$(cat "${log}" | tail -5 | grep exit= | cut -d= -f2)
         
         # Write  to file
-        echo "${pNM},${ext}" >> "${report}"
+        echo "${pNM},${rtm},${ext}" >> "${report}"
 
     done
         
