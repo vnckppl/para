@@ -108,12 +108,17 @@ if [[ "${Trun}" -gt 0 ]]; then
         echo $(tput setaf 6)"${JOB_NUMp}/${NJOBS}"$(tput setaf 2) $(date +%d\ %b\ %Y) @ $(date +%H:%M)$(tput sgr0) "- ${command}"
         # Print command to log file
         echo "${command}" >> ${LOG}
-        # >>> RUN COMMAND >>> PUT IN BACKGROUND >>> REDIRECT STD ERROR+OUTPUT TO LOG
-        bash -c "${command}" >> ${LOG} 2>&1 &
+        # Run command and then save exit status; redirect all output to the log; run everything in background
+        # if command is already prepended by 'bash'; then
+        if [ "$(echo "${command}" | awk '{ print $1 }' | grep -w bash)" ]; then
+            (bash -c "${command/bash/bash -e}"; echo "exit=$?") >> ${LOG} 2>&1 &
+        else \
+            (bash -e "${command}"; echo "exit=$?") >> ${LOG} 2>&1 &
+        fi
         # Print the process ID to the log file
         echo "PID=$!" >> ${LOG}
         
-    done < <(awk 'NF' "${FILE}")
+    done < <(cat "${FILE}")
 
 
     # Wait until all jobs (background processes) have finished
@@ -122,6 +127,29 @@ if [[ "${Trun}" -gt 0 ]]; then
     # Announce that all jobs have finished
     echo $(tput bold)"All jobs finished on `date`"$(tput sgr0)$'\n\n'
 
+    
+    # Create exit status report and display report
+    report="${DIRECTORY}/para_output/jobStatus.csv"
+    logs=$(find ${DIRECTORY}/para_output -iname "*.txt")
+    for log in $(echo "${logs}"); do
+
+        # Get process name and exit status
+        pNM=$(sed -n 1p "${log}")
+        ext=$(cat "${log}" | tail -1 | cut -d= -f2 | awk '{ print $NF }')
+        
+        # Write  to file
+        echo "${pNM},${ext}" >> "${report}"
+
+    done
+        
+    # Display jobs that failed if more than 1 failed
+    SUMCOL=$(cat "${report}" | awk -F, '{ SUM += $2} END { print SUM }')
+    if [ "${SUMCOL}" -gt 0 ]; then
+        echo "$(tput setaf 1)The following job(s) failed:$(tput sgr0)"
+        cat "${report}" | grep -v ",0$" | column -t | sed -e 's/,/ (exit status /g' -e 's/$/)/g'
+        echo
+    fi
+        
 
 
 # When all parameters for the kill switch have been set:
