@@ -71,6 +71,10 @@ if [[ "${Tall}" -gt 0 ]]; then echo "$(tput setaf 7)$(tput setab 1) Too many arg
 # When all parameters for a para run have been set:
 if [[ "${Trun}" -gt 0 ]]; then
 
+    # Test if joblist and output folder exist
+    if [ ! -f ${FILE} ]; then echo "$(tput setaf 7)$(tput setab 1) Job file does not exist $(tput sgr0)"; usage ; exit 1; fi
+    if [ ! -f ${DIRECTORY} ]; then echo "$(tput setaf 7)$(tput setab 1) Log output folder does not exist $(tput sgr0)"; usage ; exit 1; fi
+
     # Go to script folder and create log file folder
     cd ${DIRECTORY}
     mkdir -p ${DIRECTORY}/para_output
