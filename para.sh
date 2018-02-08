@@ -19,11 +19,11 @@ OPTIONS:
 
 EXAMPLE:
 - Running jobs:
-  $(tput bold)para -c /Volumes/Data/joblist.txt -d /Volumes/Data/Project -p 10$(tput sgr0)
+  $(tput bold)$(tput setaf 0)para -c /Volumes/Data/joblist.txt -d /Volumes/Data/Project -p 10$(tput sgr0)
 
 - Killing jobs:
   First quit para if it has not already finished (ctrl-c). Then run:
-  $(tput bold)para -k -d <directory>$(tput sgr0)
+  $(tput bold)$(tput setaf 0)para -k -d <directory>$(tput sgr0)
   ...where <directory> should point to the same folder as the one 
   specified when para was invoked initially.
 
